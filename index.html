@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Vincent Itan — Full Stack Web Developer & Tech Enthusiast. Mengubah ide kompleks menjadi solusi digital yang elegan, responsif, dan scalable.">
+    <meta name="author" content="Vincent Itan">
+    <title>Vincent Itan | Full Stack Web Developer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        space: { DEFAULT: '#050505', light: '#0a0a0a', card: '#0d0d0d' },
+                        cyan: { electric: '#00E5FF' },
+                        purple: { neon: '#B000FF' },
+                        glass: {
+                            DEFAULT: 'rgba(255,255,255,0.03)',
+                            border: 'rgba(255,255,255,0.06)',
+                            hover: 'rgba(255,255,255,0.08)',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #050505;
+            color: #a0a0b0;
+            overflow-x: hidden;
+        }
+
+        /* ===== Gradient text ===== */
+        .gradient-text {
+            background: linear-gradient(135deg, #00E5FF 0%, #7B61FF 50%, #B000FF 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ===== Glassmorphism card ===== */
+        .glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* Only clickable glass elements get hover */
+        a.glass:hover,
+        button.glass:hover {
+            border-color: rgba(0, 229, 255, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* ===== Scroll progress ===== */
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            z-index: 9999;
+            background: linear-gradient(90deg, #00E5FF, #B000FF);
+            transition: width 0.05s linear;
+        }
+
+        /* ===== Reveal animation ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.7s cubic-bezier(.22, 1, .36, 1), transform 0.7s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== Stagger delay helpers ===== */
+        .delay-1 {
+            transition-delay: 0.08s;
+        }
+
+        .delay-2 {
+            transition-delay: 0.16s;
+        }
+
+        .delay-3 {
+            transition-delay: 0.24s;
+        }
+
+        .delay-4 {
+            transition-delay: 0.32s;
+        }
+
+        .delay-5 {
+            transition-delay: 0.40s;
+        }
+
+        /* ===== Magnetic button ===== */
+        .magnetic-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* ===== Tilt card ===== */
+        .tilt-card {
+            transition: transform 0.15s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .tilt-card .tilt-content {
+            transform: translateZ(30px);
+        }
+
+        /* ===== Navbar ===== */
+        .nav-glass {
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* ===== Skill Icon Hover ===== */
+        .skill-icon-box {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-icon-box:hover {
+            border-color: rgba(0, 229, 255, 0.3);
+            background: rgba(0, 229, 255, 0.05);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.08);
+        }
+
+        /* ===== Tag pill ===== */
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: #888;
+            font-family: 'JetBrains Mono', monospace;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* ===== Project card gradient placeholder ===== */
+        .project-visual {
+            background: linear-gradient(145deg, rgba(0, 229, 255, 0.08), rgba(176, 0, 255, 0.08));
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* ===== Canvas ===== */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== Loading screen ===== */
+        .loader {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            background: #050505;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .loader-bar-inner {
+            width: 0%;
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #00E5FF, #B000FF);
+            animation: loadBar 1s ease forwards;
+        }
+
+        @keyframes loadBar {
+            to {
+                width: 100%;
+            }
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1a1a2e;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00E5FF;
+        }
+
+        ::selection {
+            background: rgba(0, 229, 255, 0.2);
+            color: #fff;
+        }
+
+        /* ===== Bento responsive ===== */
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .bento-grid>* {
+                grid-column: span 1 !important;
+                grid-row: span 1 !important;
+            }
+        }
+
+        /* ===== HERO ANIMATIONS ===== */
+
+        /* Floating / Levitating */
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(0.5deg); }
+        }
+        .hero-float {
+            animation: heroFloat 5s ease-in-out infinite;
+        }
+
+        /* Glowing orb pulse */
+        @keyframes orbPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.15); }
+        }
+        .orb-pulse { animation: orbPulse 4s ease-in-out infinite; }
+        .orb-pulse-delay { animation: orbPulse 5s ease-in-out 1s infinite; }
+
+        /* Typing animation */
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid rgba(0, 229, 255, 0.6);
+            width: 0;
+            animation: typing 2s steps(38) 1.2s forwards, blinkCaret 0.7s step-end infinite;
+        }
+        @keyframes typing {
+            to { width: 100%; }
+        }
+        @keyframes blinkCaret {
+            50% { border-color: transparent; }
+        }
+
+        /* Glowing text name */
+        .glow-text {
+            text-shadow: 0 0 30px rgba(0, 229, 255, 0.25), 0 0 60px rgba(176, 0, 255, 0.15);
+        }
+
+        /* Premium button glow border */
+        .btn-premium {
+            position: relative;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(176,0,255,0.15));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            transition: all 0.4s ease;
+        }
+        .btn-premium:hover::before {
+            background: linear-gradient(135deg, rgba(0,229,255,0.6), rgba(176,0,255,0.6));
+        }
+        .btn-premium:hover {
+            background: rgba(0, 229, 255, 0.05);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.12), 0 0 60px rgba(176, 0, 255, 0.06);
+        }
+        .btn-premium .btn-arrow {
+            transition: transform 0.3s ease;
+        }
+        .btn-premium:hover .btn-arrow {
+            transform: translateX(4px);
+        }
+
+        /* Glass photo card */
+        .hero-glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.5rem;
+            transition: border-color 0.4s ease;
+        }
+
+        /* Hero tilt */
+        #heroTilt {
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-400">
+
+    <!-- Loader -->
+    <div id="loader" class="loader">
+        <div class="text-center">
+            <div class="loader-text gradient-text mb-4">Vincent Itan</div>
+            <div class="loader-bar">
+                <div class="loader-bar-inner"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas Background -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Scroll Progress -->
+    <div id="scrollProgress" style="width:0%"></div>
+
+    <!-- Navbar -->
+    <nav id="navbar" class="nav-glass fixed top-0 inset-x-0 z-[999] transition-transform duration-300">
+        <div class="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16 lg:h-[72px]">
+            <a href="#hero"
+                class="font-heading text-sm sm:text-base font-bold gradient-text tracking-tight whitespace-nowrap">Portofolio Digital</a>
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#bento"
+                    class="nav-link text-sm text-gray-500 hover:text-white transition-colors font-medium">About</a>
+                <a href="#projects"
+                    class="nav-link text-sm text-gray-500 hover:text-white transition-colors font-medium">Projects</a>
+                <a href="#organization"
+                    class="nav-link text-sm text-gray-500 hover:text-white transition-colors font-medium">Experience</a>
+                <a href="#publications"
+                    class="nav-link text-sm text-gray-500 hover:text-white transition-colors font-medium">Publications</a>
+                <a href="#contact"
+                    class="nav-link text-sm text-gray-500 hover:text-white transition-colors font-medium">Contact</a>
+            </div>
+            <button id="mobileToggle" class="md:hidden flex flex-col gap-[5px] p-2 group" aria-label="Toggle menu">
+                <span
+                    class="block w-6 h-[2px] bg-gray-400 transition-all duration-300 origin-center group-[.open]:rotate-45 group-[.open]:translate-y-[7px]"></span>
+                <span class="block w-6 h-[2px] bg-gray-400 transition-all duration-300 group-[.open]:opacity-0"></span>
+                <span
+                    class="block w-6 h-[2px] bg-gray-400 transition-all duration-300 origin-center group-[.open]:-rotate-45 group-[.open]:-translate-y-[7px]"></span>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+            <div class="px-6 pb-6 pt-2 flex flex-col gap-4 border-t border-white/5">
+                <a href="#bento" class="mob-link text-base text-gray-400 hover:text-white transition-colors">About</a>
+                <a href="#projects"
+                    class="mob-link text-base text-gray-400 hover:text-white transition-colors">Projects</a>
+                <a href="#organization"
+                    class="mob-link text-base text-gray-400 hover:text-white transition-colors">Experience</a>
+                <a href="#publications"
+                    class="mob-link text-base text-gray-400 hover:text-white transition-colors">Publications</a>
+                <a href="#contact"
+                    class="mob-link text-base text-gray-400 hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10">
+
+        <!-- ===== HERO ===== -->
+        <section id="hero" class="min-h-screen flex items-center relative px-5 sm:px-8 overflow-hidden">
+
+            <!-- Hero Tilt Container -->
+            <div id="heroTilt" class="max-w-7xl mx-auto w-full pt-24 pb-20">
+                <div class="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-6">
+
+                    <!-- ========== TEXT (Left — takes more space) ========== -->
+                    <div class="flex-[1.2] text-center lg:text-left relative z-10">
+
+                        <!-- Typing code line -->
+                        <div class="reveal mb-6 h-6">
+                            <span class="typing-text font-mono text-xs sm:text-sm text-cyan-electric/70 tracking-wider">
+                                &gt; System.out.println("Hello World");
+                            </span>
+                        </div>
+
+                        <!-- Name -->
+                        <h1 class="reveal delay-1 font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-[0.92] tracking-tight mb-6">
+                            <span class="gradient-text glow-text">Vincent</span><br>
+                            <span class="gradient-text glow-text">Itan</span><span class="text-cyan-electric glow-text">.</span>
+                        </h1>
+
+                        <!-- Subtitle -->
+                        <p class="reveal delay-2 font-heading text-base sm:text-lg md:text-xl text-gray-300 font-medium mb-3">
+                            Full Stack Web Developer &amp; Tech Enthusiast
+                        </p>
+                        <p class="reveal delay-3 text-sm sm:text-base text-gray-500 max-w-lg mx-auto lg:mx-0 leading-relaxed mb-9">
+                            Mengubah ide kompleks menjadi solusi digital yang elegan, responsif, dan scalable.
+                        </p>
+
+                        <!-- Premium Buttons -->
+                        <div class="reveal delay-4 flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
+                            <a href="#projects"
+                               class="btn-premium px-7 py-3.5 rounded-full text-sm font-semibold text-gray-200 hover:text-white inline-flex items-center gap-2">
+                                <i class="fa-solid fa-rocket text-xs text-cyan-electric"></i>
+                                Lihat Karya
+                                <i class="fa-solid fa-arrow-right text-[0.6rem] btn-arrow"></i>
+                            </a>
+                            <a href="mailto:vi.mework@gmail.com"
+                               class="btn-premium px-7 py-3.5 rounded-full text-sm font-semibold text-gray-200 hover:text-white inline-flex items-center gap-2">
+                                <i class="fa-regular fa-envelope text-xs text-purple-400"></i>
+                                Hubungi Saya
+                                <i class="fa-solid fa-arrow-right text-[0.6rem] btn-arrow"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- ========== PHOTO CARD (Right — asymmetric, slightly smaller) ========== -->
+                    <div class="reveal delay-2 flex-[0.9] flex justify-center lg:justify-end relative">
+
+                        <!-- Glowing Orbs behind card -->
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] sm:w-[420px] sm:h-[420px] pointer-events-none">
+                            <div class="absolute top-0 left-[10%] w-44 h-44 sm:w-56 sm:h-56 bg-cyan-electric/30 rounded-full blur-[100px] orb-pulse"></div>
+                            <div class="absolute bottom-0 right-[10%] w-40 h-40 sm:w-52 sm:h-52 bg-purple-neon/25 rounded-full blur-[100px] orb-pulse-delay"></div>
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/5 rounded-full blur-[80px] orb-pulse"></div>
+                        </div>
+
+                        <!-- Floating Glass Card -->
+                        <div class="hero-float relative z-10">
+                            <div class="hero-glass-card p-3 sm:p-4 w-[260px] sm:w-[300px] lg:w-[320px] shadow-2xl">
+                                <!-- Photo -->
+                                <div class="rounded-2xl overflow-hidden aspect-[3/4]">
+                                    <img src="assets/vincent.png" alt="Vincent Itan"
+                                         class="w-full h-full object-cover object-top">
+                                </div>
+                                <!-- Info bar inside card -->
+                                <div class="mt-3 sm:mt-4 flex items-center justify-between px-1">
+                                    <div>
+                                        <p class="text-white text-sm font-heading font-semibold">Vincent Itan</p>
+                                        <p class="text-gray-500 text-[0.65rem] font-mono">Information System</p>
+                                    </div>
+                                    <!-- Status badge -->
+                                    <div class="px-3 py-1 rounded-full bg-green-400/10 border border-green-400/20 flex items-center gap-1.5">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></div>
+                                        <span class="text-[0.6rem] text-green-400 font-medium">Open</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Floating decorative elements -->
+                            <div class="absolute -top-4 -right-4 w-8 h-8 rounded-lg bg-cyan-electric/10 border border-cyan-electric/20 flex items-center justify-center backdrop-blur-sm" style="animation: heroFloat 4s ease-in-out 0.5s infinite;">
+                                <i class="fa-solid fa-code text-[0.55rem] text-cyan-electric/70"></i>
+                            </div>
+                            <div class="absolute -bottom-3 -left-3 w-8 h-8 rounded-lg bg-purple-neon/10 border border-purple-neon/20 flex items-center justify-center backdrop-blur-sm" style="animation: heroFloat 3.5s ease-in-out 1s infinite;">
+                                <i class="fa-solid fa-terminal text-[0.55rem] text-purple-400/70"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== BENTO BOX SECTION ===== -->
+        <section id="bento" class="py-24 lg:py-32 px-5 sm:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <p class="font-mono text-xs text-cyan-electric/60 tracking-widest uppercase mb-3">Tentang Saya</p>
+                    <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+                        Get to know <span class="gradient-text">me</span>
+                    </h2>
+                </div>
+
+                <!-- Bento Grid -->
+                <div class="bento-grid grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-5 auto-rows-auto"
+                    style="grid-template-columns: repeat(4,1fr);">
+
+                    <!-- Box 1: About (spans 2 cols, 2 rows) -->
+                    <div
+                        class="reveal delay-1 glass rounded-2xl p-6 lg:p-8 md:col-span-2 md:row-span-2 flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <div
+                                    class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-electric/20 to-purple-neon/20 flex items-center justify-center">
+                                    <i class="fa-solid fa-user text-xs text-cyan-electric"></i>
+                                </div>
+                                <span
+                                    class="font-mono text-[0.65rem] text-cyan-electric/60 tracking-widest uppercase">About</span>
+                            </div>
+                            <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-4 leading-snug">
+                                Mahasiswa tingkat akhir<br>
+                                <span class="gradient-text">Sistem Informasi</span>
+                            </h3>
+                            <p class="text-sm text-gray-400 leading-relaxed mb-5">
+                                Di Universitas Universal, saya membangun fondasi kuat dalam pengembangan web dan mobile
+                                — mampu merancang arsitektur backend yang solid sekaligus mengeksekusi UI/UX yang
+                                intuitif. Passion saya adalah menerjemahkan kebutuhan bisnis menjadi aplikasi digital
+                                yang nyata.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyan-electric/5 border border-cyan-electric/10 text-cyan-electric text-xs font-medium">
+                                <i class="fa-solid fa-bolt text-[0.55rem]"></i> Continuous Learner
+                            </span>
+                            <span
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-neon/5 border border-purple-neon/10 text-purple-400 text-xs font-medium">
+                                <i class="fa-solid fa-crosshairs text-[0.55rem]"></i> Detail-Oriented
+                            </span>
+                            <span
+                                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyan-electric/5 border border-cyan-electric/10 text-cyan-electric text-xs font-medium">
+                                <i class="fa-solid fa-people-group text-[0.55rem]"></i> Collaborative
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Box 2: Tech Stack (spans 2 cols) -->
+                    <div class="reveal delay-2 glass rounded-2xl p-6 lg:p-8 md:col-span-2 group">
+                        <div class="flex items-center gap-2 mb-5">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-electric/20 to-purple-neon/20 flex items-center justify-center">
+                                <i class="fa-solid fa-code text-xs text-cyan-electric"></i>
+                            </div>
+                            <span class="font-mono text-[0.65rem] text-cyan-electric/60 tracking-widest uppercase">Tech
+                                Stack</span>
+                        </div>
+                        <div class="grid grid-cols-3 sm:grid-cols-3 gap-2.5">
+                            <div class="skill-icon-box rounded-xl p-3 text-center bg-white/[0.02]">
+                                <i class="fa-brands fa-php text-lg text-gray-400 mb-1.5 block"></i>
+                                <span class="text-[0.65rem] text-gray-500 font-mono">PHP</span>
+                            </div>
+                            <div class="skill-icon-box rounded-xl p-3 text-center bg-white/[0.02]">
+                                <i class="fa-solid fa-database text-lg text-gray-400 mb-1.5 block"></i>
+                                <span class="text-[0.65rem] text-gray-500 font-mono">MySQL</span>
+                            </div>
+                            <div class="skill-icon-box rounded-xl p-3 text-center bg-white/[0.02]">
+                                <i class="fa-brands fa-js text-lg text-gray-400 mb-1.5 block"></i>
+                                <span class="text-[0.65rem] text-gray-500 font-mono">JavaScript</span>
+                            </div>
+                            <div class="skill-icon-box rounded-xl p-3 text-center bg-white/[0.02]">
+                                <i class="fa-brands fa-html5 text-lg text-gray-400 mb-1.5 block"></i>
+                                <span class="text-[0.65rem] text-gray-500 font-mono">HTML/CSS</span>
+                            </div>
+                            <div class="skill-icon-box rounded-xl p-3 text-center bg-white/[0.02]">
+                                <i class="fa-solid fa-mobile-screen text-lg text-gray-400 mb-1.5 block"></i>
+                                <span class="text-[0.65rem] text-gray-500 font-mono">Flutter</span>
+                            </div>
+                            <div class="skill-icon-box rounded-xl p-3 text-center bg-white/[0.02]">
+                                <i class="fa-brands fa-bootstrap text-lg text-gray-400 mb-1.5 block"></i>
+                                <span class="text-[0.65rem] text-gray-500 font-mono">Bootstrap</span>
+                            </div>
+                            <div class="skill-icon-box rounded-xl p-3 text-center bg-white/[0.02]">
+                                <i class="fa-solid fa-terminal text-lg text-gray-400 mb-1.5 block"></i>
+                                <span class="text-[0.65rem] text-gray-500 font-mono">VS Code</span>
+                            </div>
+                            <div class="skill-icon-box rounded-xl p-3 text-center bg-white/[0.02]">
+                                <i class="fa-solid fa-brain text-lg text-gray-400 mb-1.5 block"></i>
+                                <span class="text-[0.65rem] text-gray-500 font-mono">AI / ML</span>
+                            </div>
+                            <div class="skill-icon-box rounded-xl p-3 text-center bg-white/[0.02]">
+                                <i class="fa-brands fa-figma text-lg text-gray-400 mb-1.5 block"></i>
+                                <span class="text-[0.65rem] text-gray-500 font-mono">Figma</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Box 3: Certification -->
+                    <div class="reveal delay-3 glass rounded-2xl p-6 lg:p-8 md:col-span-2 group">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-electric/20 to-purple-neon/20 flex items-center justify-center">
+                                <i class="fa-solid fa-award text-xs text-cyan-electric"></i>
+                            </div>
+                            <span
+                                class="font-mono text-[0.65rem] text-cyan-electric/60 tracking-widest uppercase">Certification</span>
+                        </div>
+                        <h4 class="font-heading text-sm sm:text-base font-semibold text-white leading-snug mb-3">
+                            Microsoft Elevate — Mempersiapkan Data untuk Model AI di Microsoft Fabric
+                        </h4>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tag text-cyan-electric/70 border-cyan-electric/15">Feb 2026</span>
+                            <span class="tag">ID: ONLP1K6Z2V</span>
+                            <span class="tag"><i class="fa-brands fa-microsoft mr-1"></i>Microsoft</span>
+                        </div>
+                        <a href="https://www.dicoding.com/elevate/certificates/ONLP1K6Z2V" target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-2 text-sm text-cyan-electric hover:text-white transition-colors group/link">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                            <span class="group-hover/link:underline">Lihat Sertifikat</span>
+                        </a>
+                    </div>
+
+                    <!-- Box 4: Testimonial -->
+                    <div
+                        class="reveal delay-4 glass rounded-2xl p-6 lg:p-8 md:col-span-2 group relative overflow-hidden">
+                        <div class="absolute top-4 right-4 text-6xl text-white/[0.03] font-heading leading-none">"</div>
+                        <div class="flex items-center gap-2 mb-5">
+                            <div
+                                class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-electric/20 to-purple-neon/20 flex items-center justify-center">
+                                <i class="fa-solid fa-quote-left text-xs text-cyan-electric"></i>
+                            </div>
+                            <span
+                                class="font-mono text-[0.65rem] text-cyan-electric/60 tracking-widest uppercase">Testimonial</span>
+                        </div>
+                        <p class="text-sm text-gray-300 leading-relaxed italic mb-6">
+                            "Vincent memiliki kemauan tinggi untuk belajar. Ia bertanggung jawab penuh pada tugasnya dan
+                            berpotensi besar di dunia profesional."
+                        </p>
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-electric/30 to-purple-neon/30 flex items-center justify-center">
+                                <span class="text-white text-xs font-bold">C</span>
+                            </div>
+                            <div>
+                                <p class="text-white text-sm font-semibold">Cindy</p>
+                                <p class="text-gray-500 text-xs">Accounting Control</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PROJECTS ===== -->
+        <section id="projects" class="py-24 lg:py-32 px-5 sm:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <p class="font-mono text-xs text-cyan-electric/60 tracking-widest uppercase mb-3">Portofolio</p>
+                    <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+                        Featured <span class="gradient-text">Projects</span>
+                    </h2>
+                </div>
+
+                <div class="space-y-6 lg:space-y-8">
+
+                    <!-- Project 1 -->
+                    <div class="reveal tilt-card glass rounded-2xl overflow-hidden">
+                        <div class="grid md:grid-cols-5 gap-0">
+                            <div
+                                class="md:col-span-2 min-h-[220px] md:min-h-full relative overflow-hidden bg-[#0a0a0a] flex items-center justify-center p-3">
+                                <img src="assets/letsshine.png" alt="Website Bimbel Let's Shine"
+                                    class="w-full h-auto rounded-lg shadow-lg" style="max-height: 100%;">
+                            </div>
+                            <div class="md:col-span-3 p-6 sm:p-8 lg:p-10 tilt-content">
+                                <div class="flex items-center gap-2 mb-4 flex-wrap">
+                                    <span
+                                        class="font-mono text-[0.6rem] text-cyan-electric/60 tracking-widest uppercase">Featured
+                                        Project</span>
+                                    <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                                    <span class="text-xs text-gray-500">Lead Programmer</span>
+                                </div>
+                                <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-3">
+                                    Website Bimbel Let's Shine
+                                </h3>
+                                <p class="text-sm text-gray-400 leading-relaxed mb-5">
+                                    Sistem manajemen bimbingan belajar web end-to-end yang dibangun dari nol menggunakan
+                                    native PHP, MySQL, dan Bootstrap. Dilengkapi fitur <span
+                                        class="text-gray-300">multi-language</span> dan berhasil mendigitalisasi
+                                    administrasi sehingga meningkatkan kecepatan pemrosesan data sebesar <span
+                                        class="font-heading font-bold text-cyan-electric">40%</span>.
+                                </p>
+                                <div class="flex items-center gap-4 mb-5">
+                                    <div class="text-center">
+                                        <div class="font-heading text-xl font-bold text-white">40%</div>
+                                        <div class="text-[0.6rem] text-gray-500 font-mono">Faster</div>
+                                    </div>
+                                    <div class="w-px h-8 bg-white/5"></div>
+                                    <div class="text-center">
+                                        <div class="font-heading text-xl font-bold text-white">E2E</div>
+                                        <div class="text-[0.6rem] text-gray-500 font-mono">Full Stack</div>
+                                    </div>
+                                    <div class="w-px h-8 bg-white/5"></div>
+                                    <div class="text-center">
+                                        <div class="font-heading text-xl font-bold text-white">i18n</div>
+                                        <div class="text-[0.6rem] text-gray-500 font-mono">Multi-lang</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="tag">PHP</span><span class="tag">MySQL</span><span
+                                        class="tag">Bootstrap</span><span class="tag">Multi-Language</span>
+                                </div>
+                                <a href="https://lets-shine.universalis.web.id/index.php" target="_blank" rel="noopener noreferrer"
+                                   class="inline-flex items-center gap-2 mt-4 text-sm text-cyan-electric hover:text-white transition-colors group/link">
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                    <span class="group-hover/link:underline">Lihat Website</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="reveal delay-1 tilt-card glass rounded-2xl overflow-hidden">
+                        <div class="grid md:grid-cols-5 gap-0">
+                            <div
+                                class="md:col-span-2 min-h-[220px] md:min-h-full relative overflow-hidden bg-[#0a0a0a] flex items-center justify-center p-4">
+                                <img src="assets/bimbel-app.jpg" alt="Aplikasi Penjadwalan Bimbel"
+                                    class="h-full max-h-[320px] w-auto rounded-xl shadow-lg">
+                            </div>
+                            <div class="md:col-span-3 p-6 sm:p-8 lg:p-10 tilt-content">
+                                <div class="flex items-center gap-2 mb-4 flex-wrap">
+                                    <span
+                                        class="font-mono text-[0.6rem] text-purple-400/60 tracking-widest uppercase">Featured
+                                        Project</span>
+                                    <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                                    <span class="text-xs text-gray-500">Mobile Developer</span>
+                                </div>
+                                <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-3">
+                                    Aplikasi Penjadwalan Bimbel
+                                </h3>
+                                <p class="text-sm text-gray-400 leading-relaxed mb-5">
+                                    Aplikasi penjadwalan seluler lintas platform menggunakan framework Flutter.
+                                    Mengembangkan logika <span class="text-gray-300">sinkronisasi API real-time</span>
+                                    guna mencegah bentrok jadwal. Berhasil memfasilitasi akses bagi <span
+                                        class="font-heading font-bold text-purple-400">&gt;50 siswa</span> dengan uptime
+                                    sistem <span class="font-heading font-bold text-purple-400">98%</span>.
+                                </p>
+                                <div class="flex items-center gap-4 mb-5">
+                                    <div class="text-center">
+                                        <div class="font-heading text-xl font-bold text-white">50+</div>
+                                        <div class="text-[0.6rem] text-gray-500 font-mono">Users</div>
+                                    </div>
+                                    <div class="w-px h-8 bg-white/5"></div>
+                                    <div class="text-center">
+                                        <div class="font-heading text-xl font-bold text-white">98%</div>
+                                        <div class="text-[0.6rem] text-gray-500 font-mono">Uptime</div>
+                                    </div>
+                                    <div class="w-px h-8 bg-white/5"></div>
+                                    <div class="text-center">
+                                        <div class="font-heading text-xl font-bold text-white">RT</div>
+                                        <div class="text-[0.6rem] text-gray-500 font-mono">Real-time</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">REST
+                                        API</span><span class="tag">Real-time Sync</span>
+                                </div>
+                                <a href="https://github.com/VincentI123/Aplikasi-Flutter" target="_blank" rel="noopener noreferrer"
+                                   class="inline-flex items-center gap-2 mt-4 text-sm text-purple-400 hover:text-white transition-colors group/link">
+                                    <i class="fa-brands fa-github text-xs"></i>
+                                    <span class="group-hover/link:underline">Lihat GitHub</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="reveal delay-2 tilt-card glass rounded-2xl overflow-hidden">
+                        <div class="grid md:grid-cols-5 gap-0">
+                            <div
+                                class="md:col-span-2 min-h-[220px] md:min-h-full relative overflow-hidden bg-[#0a0a0a] flex items-center justify-center p-3">
+                                <img src="assets/absensi.png" alt="Sistem Absensi PCI"
+                                    class="w-full h-auto rounded-lg shadow-lg" style="max-height: 100%;">
+                            </div>
+                            <div class="md:col-span-3 p-6 sm:p-8 lg:p-10 tilt-content">
+                                <div class="flex items-center gap-2 mb-4 flex-wrap">
+                                    <span
+                                        class="font-mono text-[0.6rem] text-cyan-electric/60 tracking-widest uppercase">Thesis
+                                        Project</span>
+                                    <span class="w-1 h-1 rounded-full bg-gray-600"></span>
+                                    <span class="text-xs text-gray-500">Full Stack Developer</span>
+                                </div>
+                                <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-3">
+                                    Sistem Absensi &amp; Pengajuan Izin
+                                </h3>
+                                <p class="text-sm text-gray-400 leading-relaxed mb-5">
+                                    Sistem absensi digital untuk skripsi menggunakan metodologi Waterfall. Dilengkapi
+                                    fitur <span class="text-gray-300">deteksi geolokasi</span> dan <span
+                                        class="text-gray-300">verifikasi selfie tingkat lanjut</span> untuk memastikan
+                                    kehadiran autentik. Mencakup modul pengajuan izin terintegrasi.
+                                </p>
+                                <div class="flex items-center gap-4 mb-5">
+                                    <div class="text-center">
+                                        <div class="font-heading text-xl font-bold text-white">GPS</div>
+                                        <div class="text-[0.6rem] text-gray-500 font-mono">Geolocation</div>
+                                    </div>
+                                    <div class="w-px h-8 bg-white/5"></div>
+                                    <div class="text-center">
+                                        <div class="font-heading text-xl font-bold text-white">📸</div>
+                                        <div class="text-[0.6rem] text-gray-500 font-mono">Selfie Verify</div>
+                                    </div>
+                                    <div class="w-px h-8 bg-white/5"></div>
+                                    <div class="text-center">
+                                        <div class="font-heading text-xl font-bold text-white">SDLC</div>
+                                        <div class="text-[0.6rem] text-gray-500 font-mono">Waterfall</div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="tag">Full Stack</span><span class="tag">Geolocation API</span><span
+                                        class="tag">Camera API</span><span class="tag">Waterfall</span>
+                                </div>
+                                <a href="https://icp-absensi-proyek.infinityfreeapp.com/index.php" target="_blank" rel="noopener noreferrer"
+                                   class="inline-flex items-center gap-2 mt-4 text-sm text-cyan-electric hover:text-white transition-colors group/link">
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                    <span class="group-hover/link:underline">Lihat Demo</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PENGALAMAN ORGANISASI ===== -->
+        <section id="organization" class="py-24 lg:py-32 px-5 sm:px-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <p class="font-mono text-xs text-cyan-electric/60 tracking-widest uppercase mb-3">Experience</p>
+                    <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+                        Pengalaman <span class="gradient-text">Organisasi</span>.
+                    </h2>
+                </div>
+
+                <!-- Timeline -->
+                <div class="relative">
+                    <!-- Timeline line -->
+                    <div class="absolute left-6 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-electric/30 via-purple-neon/20 to-transparent"></div>
+
+                    <!-- Timeline Item -->
+                    <div class="reveal relative pl-16 sm:pl-20 pb-2">
+                        <!-- Timeline dot -->
+                        <div class="absolute left-[14px] sm:left-[22px] top-1 w-5 h-5 rounded-full bg-gradient-to-br from-cyan-electric to-purple-neon flex items-center justify-center shadow-[0_0_20px_rgba(0,229,255,0.3)]">
+                            <div class="w-2 h-2 rounded-full bg-space"></div>
+                        </div>
+
+                        <!-- Card -->
+                        <div class="glass rounded-2xl p-6 sm:p-8 group hover:shadow-[0_0_40px_rgba(0,229,255,0.06)] relative overflow-hidden">
+                            <!-- Decorative gradient corner -->
+                            <div class="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-cyan-electric/5 to-purple-neon/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                            <!-- Header -->
+                            <div class="flex flex-col sm:flex-row sm:items-start gap-4 mb-5 relative">
+                                <div class="flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border border-white/10 group-hover:border-cyan-electric/20 transition-colors">
+                                    <img src="assets/hmsi.png" alt="Logo HMSI" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="font-heading text-lg sm:text-xl font-bold text-white leading-snug mb-1 group-hover:text-cyan-electric/90 transition-colors">
+                                        Himpunan Sistem Informasi
+                                    </h3>
+                                    <p class="text-sm text-gray-400 mb-2">Universitas Universal</p>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-electric/5 border border-cyan-electric/10 text-cyan-electric text-xs font-medium">
+                                            <i class="fa-solid fa-palette text-[0.55rem]"></i> Divisi Acara / Kreatif
+                                        </span>
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-neon/5 border border-purple-neon/10 text-purple-400 text-xs font-medium">
+                                            <i class="fa-solid fa-id-badge text-[0.55rem]"></i> Anggota Kepanitiaan
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Period badge -->
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+                                    <i class="fa-regular fa-calendar text-xs text-cyan-electric/60"></i>
+                                    <span class="font-mono text-xs text-gray-400">Sep 2022 — Sep 2024</span>
+                                </div>
+                                <span class="tag text-cyan-electric/70 border-cyan-electric/15">2 Periode</span>
+                            </div>
+
+                            <!-- Task list -->
+                            <div class="space-y-4 relative">
+                                <div class="flex gap-3 group/item">
+                                    <div class="flex-shrink-0 mt-1.5 w-5 h-5 rounded-md bg-cyan-electric/10 flex items-center justify-center">
+                                        <i class="fa-solid fa-calendar-check text-[0.55rem] text-cyan-electric/70"></i>
+                                    </div>
+                                    <p class="text-sm text-gray-400 leading-relaxed">
+                                        Berperan aktif <span class="text-gray-300">merencanakan, mempersiapkan, dan mengeksekusi</span> berbagai program kerja serta acara himpunan.
+                                    </p>
+                                </div>
+
+                                <div class="flex gap-3 group/item">
+                                    <div class="flex-shrink-0 mt-1.5 w-5 h-5 rounded-md bg-purple-neon/10 flex items-center justify-center">
+                                        <i class="fa-solid fa-pen-nib text-[0.55rem] text-purple-400/70"></i>
+                                    </div>
+                                    <p class="text-sm text-gray-400 leading-relaxed">
+                                        Merancang dan memproduksi <span class="text-gray-300">materi visual kegiatan</span> (termasuk sertifikat untuk peserta, panitia, dan pembicara) menggunakan <span class="font-heading font-semibold text-cyan-electric">Canva</span> dan <span class="font-heading font-semibold text-cyan-electric">Photoshop</span>.
+                                    </p>
+                                </div>
+
+                                <div class="flex gap-3 group/item">
+                                    <div class="flex-shrink-0 mt-1.5 w-5 h-5 rounded-md bg-cyan-electric/10 flex items-center justify-center">
+                                        <i class="fa-solid fa-handshake text-[0.55rem] text-cyan-electric/70"></i>
+                                    </div>
+                                    <p class="text-sm text-gray-400 leading-relaxed">
+                                        Berkolaborasi erat dalam <span class="text-gray-300">rapat koordinasi divisi</span> untuk menyusun strategi kegiatan, memberikan masukan, serta memastikan kelancaran operasional setiap acara mahasiswa.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Bottom stats -->
+                            <div class="flex items-center gap-4 mt-6 pt-5 border-t border-white/5">
+                                <div class="text-center">
+                                    <div class="font-heading text-lg font-bold text-white">2</div>
+                                    <div class="text-[0.6rem] text-gray-500 font-mono">Periode</div>
+                                </div>
+                                <div class="w-px h-8 bg-white/5"></div>
+                                <div class="text-center">
+                                    <div class="font-heading text-lg font-bold text-white">2 thn</div>
+                                    <div class="text-[0.6rem] text-gray-500 font-mono">Durasi</div>
+                                </div>
+                                <div class="w-px h-8 bg-white/5"></div>
+                                <div class="text-center">
+                                    <div class="font-heading text-lg font-bold text-white">SI</div>
+                                    <div class="text-[0.6rem] text-gray-500 font-mono">Himpunan</div>
+                                </div>
+                                <div class="w-px h-8 bg-white/5"></div>
+                                <div class="text-center">
+                                    <div class="font-heading text-lg font-bold text-white">🎨</div>
+                                    <div class="text-[0.6rem] text-gray-500 font-mono">Kreatif</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PUBLICATIONS ===== -->
+        <section id="publications" class="py-24 lg:py-32 px-5 sm:px-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <p class="font-mono text-xs text-cyan-electric/60 tracking-widest uppercase mb-3">Research</p>
+                    <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+                        Publikasi <span class="gradient-text">Ilmiah</span>
+                    </h2>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Pub 1 -->
+                    <a href="https://journal.uvers.ac.id/index.php/jodens/article/view/253" target="_blank"
+                        rel="noopener noreferrer"
+                        class="reveal glass rounded-2xl p-6 sm:p-8 group hover:border-cyan-electric/20 flex flex-col sm:flex-row sm:items-start gap-5 block">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-electric/10 to-purple-neon/10 border border-white/5 flex items-center justify-center">
+                            <i class="fa-solid fa-file-lines text-lg text-cyan-electric/60"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3
+                                class="font-heading text-base sm:text-lg font-semibold text-white leading-snug mb-2 group-hover:text-cyan-electric transition-colors">
+                                Sistem Pendukung Keputusan Pemilihan Pengajar Les untuk Siswa Lembaga Bimbingan Belajar
+                                Dengan Metode Simple Additive Weight
+                            </h3>
+                            <p class="text-sm text-gray-500 mb-3">Penelitian tentang penerapan metode SAW dalam sistem
+                                pendukung keputusan untuk optimalisasi proses seleksi pengajar les.</p>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="tag text-cyan-electric/70 border-cyan-electric/15">Desember 2024</span>
+                                <span class="tag">SAW Method</span>
+                                <span class="tag">DSS</span>
+                                <span
+                                    class="inline-flex items-center gap-1.5 text-xs text-cyan-electric/60 group-hover:text-cyan-electric transition-colors sm:ml-auto">
+                                    Baca Jurnal <i class="fa-solid fa-arrow-up-right-from-square text-[0.6rem]"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Pub 2 -->
+                    <a href="https://journal.uvers.ac.id/index.php/jodens/article/view/234/" target="_blank"
+                        rel="noopener noreferrer"
+                        class="reveal delay-1 glass rounded-2xl p-6 sm:p-8 group hover:border-purple-neon/20 flex flex-col sm:flex-row sm:items-start gap-5 block">
+                        <div
+                            class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-neon/10 to-cyan-electric/10 border border-white/5 flex items-center justify-center">
+                            <i class="fa-solid fa-file-lines text-lg text-purple-400/60"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3
+                                class="font-heading text-base sm:text-lg font-semibold text-white leading-snug mb-2 group-hover:text-purple-400 transition-colors">
+                                Implementasi Support Vector Machine untuk Klasifikasi Kasus Monkeypox: Pendekatan
+                                Oversampling dan Undersampling untuk Mengatasi Ketidakseimbangan Kelas
+                            </h3>
+                            <p class="text-sm text-gray-500 mb-3">Penelitian machine learning menggunakan SVM dengan
+                                teknik resampling untuk klasifikasi kasus Monkeypox secara akurat.</p>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="tag text-purple-400/70 border-purple-400/15">Juli 2024</span>
+                                <span class="tag">SVM</span>
+                                <span class="tag">Machine Learning</span>
+                                <span
+                                    class="inline-flex items-center gap-1.5 text-xs text-purple-400/60 group-hover:text-purple-400 transition-colors sm:ml-auto">
+                                    Baca Jurnal <i class="fa-solid fa-arrow-up-right-from-square text-[0.6rem]"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT ===== -->
+        <section id="contact" class="py-24 lg:py-32 px-5 sm:px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <p class="reveal font-mono text-xs text-cyan-electric/60 tracking-widest uppercase mb-5">What's Next?
+                </p>
+                <h2 class="reveal delay-1 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
+                    Mari <span class="gradient-text">Berkolaborasi</span>
+                </h2>
+                <p class="reveal delay-2 text-gray-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto mb-12">
+                    Kotak masuk saya selalu terbuka untuk peluang, diskusi proyek, atau sekadar menyapa. Mari buat
+                    sesuatu yang luar biasa bersama.
+                </p>
+                <div class="reveal delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="mailto:vi.mework@gmail.com"
+                        class="magnetic-btn px-8 py-4 rounded-full text-sm font-semibold text-space bg-gradient-to-r from-cyan-electric to-purple-neon hover:shadow-[0_0_40px_rgba(0,229,255,0.25)] transition-all duration-300 w-full sm:w-auto justify-center">
+                        <i class="fa-solid fa-paper-plane text-xs"></i> Kirim Email
+                    </a>
+                    <a href="https://linkedin.com/in/vincent-itan1" target="_blank" rel="noopener noreferrer"
+                        class="magnetic-btn px-8 py-4 rounded-full text-sm font-semibold text-gray-300 border border-white/10 hover:border-cyan-electric/40 hover:text-white transition-all duration-300 w-full sm:w-auto justify-center">
+                        <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/VincentI123" target="_blank" rel="noopener noreferrer"
+                        class="magnetic-btn px-8 py-4 rounded-full text-sm font-semibold text-gray-300 border border-white/10 hover:border-cyan-electric/40 hover:text-white transition-all duration-300 w-full sm:w-auto justify-center">
+                        <i class="fa-brands fa-github text-xs"></i> GitHub
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/[0.03] py-8 px-5 sm:px-8 relative z-10">
+        <div
+            class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <p class="text-xs text-gray-600 font-mono">
+                &copy; 2026 Vincent Itan. Designed with passion.
+            </p>
+            <div class="flex items-center gap-5">
+                <a href="https://github.com/VincentI123" target="_blank"
+                    class="text-gray-600 hover:text-cyan-electric transition-colors text-sm">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/vincent-itan1" target="_blank"
+                    class="text-gray-600 hover:text-cyan-electric transition-colors text-sm">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+                <a href="mailto:vi.mework@gmail.com"
+                    class="text-gray-600 hover:text-cyan-electric transition-colors text-sm">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+            (function () {
+                'use strict';
+
+                // ── LOADER ──
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        document.getElementById('loader').classList.add('hidden');
+                        setTimeout(() => document.getElementById('loader').remove(), 600);
+                    }, 1000);
+                });
+
+                // ── CANVAS PARTICLE BACKGROUND ──
+                const canvas = document.getElementById('bgCanvas');
+                const ctx = canvas.getContext('2d');
+                let cW, cH, particles = [], mouse = { x: -9999, y: -9999 };
+                const PARTICLE_COUNT = 60;
+                const CONNECTION_DIST = 160;
+                const MOUSE_RADIUS = 180;
+
+                function resizeCanvas() {
+                    cW = canvas.width = window.innerWidth;
+                    cH = canvas.height = window.innerHeight;
+                }
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                document.addEventListener('mousemove', e => {
+                    mouse.x = e.clientX;
+                    mouse.y = e.clientY;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * cW;
+                        this.y = Math.random() * cH;
+                        this.vx = (Math.random() - 0.5) * 0.4;
+                        this.vy = (Math.random() - 0.5) * 0.4;
+                        this.radius = Math.random() * 2 + 0.5;
+                        this.hue = Math.random() > 0.5 ? 187 : 276;
+                        this.alpha = Math.random() * 0.5 + 0.1;
+                    }
+                    update() {
+                        const dx = this.x - mouse.x;
+                        const dy = this.y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < MOUSE_RADIUS && dist > 0) {
+                            const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS * 0.8;
+                            this.vx += (dx / dist) * force;
+                            this.vy += (dy / dist) * force;
+                        }
+                        this.vx *= 0.98;
+                        this.vy *= 0.98;
+                        this.x += this.vx;
+                        this.y += this.vy;
+                        if (this.x < 0) this.x = cW;
+                        if (this.x > cW) this.x = 0;
+                        if (this.y < 0) this.y = cH;
+                        if (this.y > cH) this.y = 0;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${this.alpha})`;
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.radius * 3, 0, Math.PI * 2);
+                        ctx.fillStyle = `hsla(${this.hue}, 100%, 60%, ${this.alpha * 0.1})`;
+                        ctx.fill();
+                    }
+                }
+
+                for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+                function drawConnections() {
+                    for (let i = 0; i < particles.length; i++) {
+                        for (let j = i + 1; j < particles.length; j++) {
+                            const dx = particles[i].x - particles[j].x;
+                            const dy = particles[i].y - particles[j].y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < CONNECTION_DIST) {
+                                const alpha = (1 - dist / CONNECTION_DIST) * 0.12;
+                                ctx.strokeStyle = `rgba(0, 229, 255, ${alpha})`;
+                                ctx.lineWidth = 0.5;
+                                ctx.beginPath();
+                                ctx.moveTo(particles[i].x, particles[i].y);
+                                ctx.lineTo(particles[j].x, particles[j].y);
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                }
+
+                function animateCanvas() {
+                    ctx.clearRect(0, 0, cW, cH);
+                    particles.forEach(p => { p.update(); p.draw(); });
+                    drawConnections();
+                    requestAnimationFrame(animateCanvas);
+                }
+                animateCanvas();
+
+                // ── SCROLL PROGRESS ──
+                const progressBar = document.getElementById('scrollProgress');
+                window.addEventListener('scroll', () => {
+                    const scrolled = window.pageYOffset;
+                    const docH = document.documentElement.scrollHeight - window.innerHeight;
+                    progressBar.style.width = ((scrolled / docH) * 100) + '%';
+                }, { passive: true });
+
+                // ── NAVBAR HIDE/SHOW ──
+                const navbar = document.getElementById('navbar');
+                let lastScrollY = 0;
+                window.addEventListener('scroll', () => {
+                    const cur = window.pageYOffset;
+                    if (cur > 100) {
+                        navbar.style.transform = cur > lastScrollY ? 'translateY(-100%)' : 'translateY(0)';
+                    } else {
+                        navbar.style.transform = 'translateY(0)';
+                    }
+                    lastScrollY = cur;
+                }, { passive: true });
+
+                // ── MOBILE MENU ──
+                const mobileToggle = document.getElementById('mobileToggle');
+                const mobileMenu = document.getElementById('mobileMenu');
+
+                mobileToggle.addEventListener('click', () => {
+                    mobileToggle.classList.toggle('open');
+                    if (mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== '0px') {
+                        mobileMenu.style.maxHeight = '0px';
+                    } else {
+                        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+                    }
+                });
+                document.querySelectorAll('.mob-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileToggle.classList.remove('open');
+                        mobileMenu.style.maxHeight = '0px';
+                    });
+                });
+
+                // ── SCROLL REVEAL ──
+                const revealObs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) entry.target.classList.add('visible');
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+                document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+                // ── 3D TILT EFFECT ON CARDS ──
+                document.querySelectorAll('.tilt-card').forEach(card => {
+                    card.addEventListener('mousemove', e => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = ((y - centerY) / centerY) * -3;
+                        const rotateY = ((x - centerX) / centerX) * 3;
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01,1.01,1.01)`;
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+                    });
+                });
+
+
+                // ── SMOOTH ANCHOR SCROLL ──
+                document.querySelectorAll('a[href^="#"]').forEach(a => {
+                    a.addEventListener('click', e => {
+                        e.preventDefault();
+                        const target = document.querySelector(a.getAttribute('href'));
+                        if (target) {
+                            const top = target.offsetTop - 80;
+                            window.scrollTo({ top, behavior: 'smooth' });
+                        }
+                    });
+                });
+
+                // ── HERO TILT ──
+                const heroTilt = document.getElementById('heroTilt');
+                const heroSection = document.getElementById('hero');
+                if (heroTilt && heroSection) {
+                    heroSection.addEventListener('mousemove', (e) => {
+                        const rect = heroSection.getBoundingClientRect();
+                        const x = (e.clientX - rect.left) / rect.width - 0.5;
+                        const y = (e.clientY - rect.top) / rect.height - 0.5;
+                        heroTilt.style.transform = `perspective(1200px) rotateY(${x * 4}deg) rotateX(${-y * 3}deg)`;
+                    });
+                    heroSection.addEventListener('mouseleave', () => {
+                        heroTilt.style.transform = 'perspective(1200px) rotateY(0deg) rotateX(0deg)';
+                    });
+                }
+
+            })();
+    </script>
+</body>
+
+</html>
