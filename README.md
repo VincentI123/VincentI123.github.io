@@ -134,10 +134,9 @@ PERSONAL-BRANDING/
 
 ## 🌐 Live Demo
 
-> _Tambahkan link deploy di sini setelah hosting (Netlify, Vercel, GitHub Pages, dll.)_
 
 ```
-https://your-portfolio-url.com
+https://vincenti123.github.io/
 ```
 
 ---
